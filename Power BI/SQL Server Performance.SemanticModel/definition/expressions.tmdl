@@ -1,0 +1,18 @@
+expression Server = "DK-SQL01" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
+	lineageTag: 52cdf3e1-7a78-4296-bdad-f9487b402c6e
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+
+expression 'Source Master DB' =
+		let
+		    Source = Sql.Database(Server, "master")
+		in
+		    Source
+	lineageTag: 359f0405-f7c6-454f-a5f8-b2fcfe485260
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

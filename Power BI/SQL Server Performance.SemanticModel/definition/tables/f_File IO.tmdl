@@ -1,0 +1,213 @@
+table 'f_File IO'
+	lineageTag: 718cac39-e2fa-434f-8167-08970bc604cd
+
+	column PerformanceFileIoId
+		dataType: double
+		lineageTag: 7f131adc-d032-4d4f-82e3-110c55f6f0ff
+		summarizeBy: count
+		sourceColumn: PerformanceFileIoId
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CollectionRunId
+		dataType: int64
+		formatString: 0
+		lineageTag: f18ae127-6943-4732-8ece-eebdc1be8600
+		summarizeBy: none
+		sourceColumn: CollectionRunId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CaptureTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e00852bf-221e-4398-9f14-9e3a8cc09f10
+		summarizeBy: none
+		sourceColumn: CaptureTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column SqlServerStartTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 25060704-31a2-4c58-89e6-a61634e732b1
+		summarizeBy: none
+		sourceColumn: SqlServerStartTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column ServerName
+		dataType: string
+		lineageTag: 1baeb391-5802-40d4-a8f4-f7a67382b358
+		summarizeBy: none
+		sourceColumn: ServerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column DatabaseId
+		dataType: double
+		lineageTag: 89171dd0-dd2b-4ca7-9dff-b2b83ae4837a
+		summarizeBy: count
+		sourceColumn: DatabaseId
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DatabaseName
+		dataType: string
+		lineageTag: a988ecf7-b9dd-4da6-9654-524533c7198b
+		summarizeBy: none
+		sourceColumn: DatabaseName
+
+		annotation SummarizationSetBy = Automatic
+
+	column FileId
+		dataType: double
+		lineageTag: 6d5042f8-1d92-4dde-8f4f-4eac9a6138e8
+		summarizeBy: count
+		sourceColumn: FileId
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LogicalFileName
+		dataType: string
+		lineageTag: 6336660d-6dae-4fe2-a4e8-5df4ad7b39f2
+		summarizeBy: none
+		sourceColumn: LogicalFileName
+
+		annotation SummarizationSetBy = Automatic
+
+	column PhysicalFileName
+		dataType: string
+		lineageTag: c744ecd6-08c9-4f73-b97d-fdad0de2d5ab
+		summarizeBy: none
+		sourceColumn: PhysicalFileName
+
+		annotation SummarizationSetBy = Automatic
+
+	column FileType
+		dataType: string
+		lineageTag: b4ebf091-f737-4270-afbe-3a1b4a741925
+		summarizeBy: none
+		sourceColumn: FileType
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumOfReads
+		dataType: double
+		lineageTag: 364d2bfe-54c1-4bf5-9e2d-a3bf654c3ed7
+		summarizeBy: sum
+		sourceColumn: NumOfReads
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NumOfBytesRead
+		dataType: double
+		lineageTag: 56af0a21-aa15-4f54-b0b2-2c27bd076c5e
+		summarizeBy: sum
+		sourceColumn: NumOfBytesRead
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IoStallReadMs
+		dataType: double
+		lineageTag: ac1b20ea-614f-4600-bb5c-ea028c280759
+		summarizeBy: sum
+		sourceColumn: IoStallReadMs
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NumOfWrites
+		dataType: double
+		lineageTag: d7bc3cc5-7ed1-478e-9d87-aaf9d2fc89f2
+		summarizeBy: sum
+		sourceColumn: NumOfWrites
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NumOfBytesWritten
+		dataType: double
+		lineageTag: 8c575a62-f4de-420c-b5a5-14eaffda094d
+		summarizeBy: sum
+		sourceColumn: NumOfBytesWritten
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IoStallWriteMs
+		dataType: double
+		lineageTag: 26cb219c-64f4-4ad5-82da-52a921309155
+		summarizeBy: sum
+		sourceColumn: IoStallWriteMs
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IoStallQueuedReadMs
+		dataType: double
+		lineageTag: 1d1864e1-db94-4b7e-91e0-aa151d6a331a
+		summarizeBy: sum
+		sourceColumn: IoStallQueuedReadMs
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IoStallQueuedWriteMs
+		dataType: double
+		lineageTag: 8284fe30-2a5b-4cc3-8eea-a7521d638f62
+		summarizeBy: sum
+		sourceColumn: IoStallQueuedWriteMs
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SizeOnDiskBytes
+		dataType: double
+		lineageTag: a0af81d5-a233-4126-8889-57915d892066
+		summarizeBy: sum
+		sourceColumn: SizeOnDiskBytes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PerformanceCollectorRun
+		dataType: string
+		lineageTag: 2d0a7947-97cb-4c05-860d-8b6d9da71577
+		summarizeBy: none
+		sourceColumn: PerformanceCollectorRun
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'f_File IO' = m
+		mode: import
+		source =
+				let
+				    Source = #"Source Master DB",
+				    dbo_PerformanceFileIo = Source{[Schema="dbo",Item="PerformanceFileIo"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceFileIo,{{"PerformanceFileIoId", type number}, {"CollectionRunId", Int64.Type}, {"CaptureTime", type datetime}, {"SqlServerStartTime", type datetime}, {"ServerName", type text}, {"DatabaseId", type number}, {"DatabaseName", type any}, {"FileId", type number}, {"LogicalFileName", type any}, {"PhysicalFileName", type text}, {"FileType", type text}, {"NumOfReads", type number}, {"NumOfBytesRead", type number}, {"IoStallReadMs", type number}, {"NumOfWrites", type number}, {"NumOfBytesWritten", type number}, {"IoStallWriteMs", type number}, {"IoStallQueuedReadMs", type number}, {"IoStallQueuedWriteMs", type number}, {"SizeOnDiskBytes", type number}, {"PerformanceCollectorRun", type any}})
+				in
+				    #"Changed Type"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

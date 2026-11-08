@@ -1,0 +1,259 @@
+table 'f_Server Resource'
+	lineageTag: ea0fdc18-5c15-4479-8dd0-5c59942d6821
+
+	column PerformanceServerResourceId
+		dataType: int64
+		formatString: 0
+		lineageTag: 7ac61a19-f615-4c66-b158-f8230560fad4
+		summarizeBy: count
+		sourceColumn: PerformanceServerResourceId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CollectionRunId
+		dataType: int64
+		formatString: 0
+		lineageTag: f2b2e23a-cea7-44ba-a57e-c756f41fe364
+		summarizeBy: none
+		sourceColumn: CollectionRunId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CaptureTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3097b6ff-61b6-45c5-962d-bb2b6514d5a1
+		summarizeBy: none
+		sourceColumn: CaptureTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column SqlServerStartTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0f3ef02e-948d-450f-ba19-153f6b54482f
+		summarizeBy: none
+		sourceColumn: SqlServerStartTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column ServerName
+		dataType: string
+		lineageTag: c89ee4de-b72e-40ea-87ff-65124c6d041b
+		summarizeBy: none
+		sourceColumn: ServerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalPhysicalMemoryKb
+		dataType: int64
+		formatString: 0
+		lineageTag: fd51a458-fe6f-4e73-be42-c89e9e2f2e96
+		summarizeBy: sum
+		sourceColumn: TotalPhysicalMemoryKb
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvailablePhysicalMemoryKb
+		dataType: int64
+		formatString: 0
+		lineageTag: 4aa09748-c90b-4c60-9411-bf788b416616
+		summarizeBy: sum
+		sourceColumn: AvailablePhysicalMemoryKb
+
+		annotation SummarizationSetBy = Automatic
+
+	column SystemMemoryState
+		dataType: string
+		lineageTag: 30b89bdd-81af-46fd-a103-82ad0423c44a
+		summarizeBy: none
+		sourceColumn: SystemMemoryState
+
+		annotation SummarizationSetBy = Automatic
+
+	column SqlPhysicalMemoryInUseKb
+		dataType: int64
+		formatString: 0
+		lineageTag: 02d8e2a5-d848-437b-bff8-e6f3dfd8ab5b
+		summarizeBy: sum
+		sourceColumn: SqlPhysicalMemoryInUseKb
+
+		annotation SummarizationSetBy = Automatic
+
+	column LockedPagesAllocatedKb
+		dataType: int64
+		formatString: 0
+		lineageTag: c37a65d5-37f0-4a7a-9ce1-d2f15de31e99
+		summarizeBy: sum
+		sourceColumn: LockedPagesAllocatedKb
+
+		annotation SummarizationSetBy = Automatic
+
+	column LargePageAllocationsKb
+		dataType: int64
+		formatString: 0
+		lineageTag: 4096ee7c-5481-4283-9f05-6e73984e45de
+		summarizeBy: sum
+		sourceColumn: LargePageAllocationsKb
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessPhysicalMemoryLow
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d82802d4-8590-410d-a95c-80fb2fd3abf0
+		summarizeBy: none
+		sourceColumn: ProcessPhysicalMemoryLow
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProcessVirtualMemoryLow
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d26e4fb1-a6d2-491c-a31c-deb72c427de1
+		summarizeBy: none
+		sourceColumn: ProcessVirtualMemoryLow
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalServerMemoryKb
+		dataType: int64
+		formatString: 0
+		lineageTag: 9a70104c-b620-44d1-9bcc-2667b0da7a94
+		summarizeBy: sum
+		sourceColumn: TotalServerMemoryKb
+
+		annotation SummarizationSetBy = Automatic
+
+	column TargetServerMemoryKb
+		dataType: int64
+		formatString: 0
+		lineageTag: eb7daf05-7d82-479f-b25c-baf7222dd319
+		summarizeBy: sum
+		sourceColumn: TargetServerMemoryKb
+
+		annotation SummarizationSetBy = Automatic
+
+	column MemoryGrantsPending
+		dataType: int64
+		formatString: 0
+		lineageTag: cf3466e8-fc9a-47dd-85bf-58ed4cca6824
+		summarizeBy: sum
+		sourceColumn: MemoryGrantsPending
+
+		annotation SummarizationSetBy = Automatic
+
+	column OnlineSchedulers
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c98c569-19c0-4950-b500-d1e4c7b0a18e
+		summarizeBy: sum
+		sourceColumn: OnlineSchedulers
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurrentTasks
+		dataType: int64
+		formatString: 0
+		lineageTag: cba7267c-3249-4122-9134-c405f0fd331d
+		summarizeBy: sum
+		sourceColumn: CurrentTasks
+
+		annotation SummarizationSetBy = Automatic
+
+	column RunnableTasks
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d24563e-12de-440f-b554-3ce5df3c0629
+		summarizeBy: sum
+		sourceColumn: RunnableTasks
+
+		annotation SummarizationSetBy = Automatic
+
+	column CurrentWorkers
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e8d2e7f-2331-4744-bbd6-9ea1b9ec62f2
+		summarizeBy: sum
+		sourceColumn: CurrentWorkers
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActiveWorkers
+		dataType: int64
+		formatString: 0
+		lineageTag: b90354fb-ab57-4d25-9a85-4fe0f4cca690
+		summarizeBy: sum
+		sourceColumn: ActiveWorkers
+
+		annotation SummarizationSetBy = Automatic
+
+	column WorkQueueCount
+		dataType: int64
+		formatString: 0
+		lineageTag: ecc500ca-1b9d-40ce-883e-7f40e19c6997
+		summarizeBy: sum
+		sourceColumn: WorkQueueCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column PendingDiskIoCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d5b3b5e-c765-4d3d-8302-a025ad88ca14
+		summarizeBy: sum
+		sourceColumn: PendingDiskIoCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column UserConnections
+		dataType: int64
+		formatString: 0
+		lineageTag: 83d81610-33f0-4c86-a849-d5bb39e5ac8d
+		summarizeBy: sum
+		sourceColumn: UserConnections
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActiveRequests
+		dataType: int64
+		formatString: 0
+		lineageTag: f8f4cebf-72a7-4906-b163-f67ca3f1bc67
+		summarizeBy: sum
+		sourceColumn: ActiveRequests
+
+		annotation SummarizationSetBy = Automatic
+
+	column BlockedRequests
+		dataType: int64
+		formatString: 0
+		lineageTag: b978bd07-3140-47fd-a8d5-4983d52c3ab8
+		summarizeBy: sum
+		sourceColumn: BlockedRequests
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerformanceCollectorRun
+		dataType: string
+		lineageTag: c32f076e-e21a-4f5e-af25-553f84bb0d65
+		summarizeBy: none
+		sourceColumn: PerformanceCollectorRun
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'f_Server Resource' = m
+		mode: import
+		source =
+				let
+				    Source = #"Source Master DB",
+				    dbo_PerformanceServerResource = Source{[Schema="dbo",Item="PerformanceServerResource"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceServerResource,{{"PerformanceServerResourceId", Int64.Type}, {"CollectionRunId", Int64.Type}, {"CaptureTime", type datetime}, {"SqlServerStartTime", type datetime}, {"ServerName", type text}, {"TotalPhysicalMemoryKb", Int64.Type}, {"AvailablePhysicalMemoryKb", Int64.Type}, {"SystemMemoryState", type text}, {"SqlPhysicalMemoryInUseKb", Int64.Type}, {"LockedPagesAllocatedKb", Int64.Type}, {"LargePageAllocationsKb", Int64.Type}, {"ProcessPhysicalMemoryLow", type logical}, {"ProcessVirtualMemoryLow", type logical}, {"TotalServerMemoryKb", Int64.Type}, {"TargetServerMemoryKb", Int64.Type}, {"MemoryGrantsPending", Int64.Type}, {"OnlineSchedulers", Int64.Type}, {"CurrentTasks", Int64.Type}, {"RunnableTasks", Int64.Type}, {"CurrentWorkers", Int64.Type}, {"ActiveWorkers", Int64.Type}, {"WorkQueueCount", Int64.Type}, {"PendingDiskIoCount", Int64.Type}, {"UserConnections", Int64.Type}, {"ActiveRequests", Int64.Type}, {"BlockedRequests", Int64.Type}, {"PerformanceCollectorRun", type any}})
+				in
+				    #"Changed Type"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

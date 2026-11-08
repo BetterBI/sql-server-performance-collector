@@ -1,0 +1,152 @@
+table 'f_Ola Command Log'
+	lineageTag: a8941233-4882-4a7d-b243-285ffb55ad19
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: fde471db-8eb5-4f04-96e2-a6c248218c34
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DatabaseName
+		dataType: string
+		lineageTag: e4645956-1410-4a1b-809c-1d4ef003b0af
+		summarizeBy: none
+		sourceColumn: DatabaseName
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchemaName
+		dataType: string
+		lineageTag: 9848ea5d-c250-4534-aa5f-08886de206b7
+		summarizeBy: none
+		sourceColumn: SchemaName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ObjectName
+		dataType: string
+		lineageTag: 2bea3231-db91-4d3f-a67e-192adf182daa
+		summarizeBy: none
+		sourceColumn: ObjectName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ObjectType
+		dataType: string
+		lineageTag: ffe2134d-8861-46d5-8132-14dd154fba72
+		summarizeBy: none
+		sourceColumn: ObjectType
+
+		annotation SummarizationSetBy = Automatic
+
+	column IndexName
+		dataType: string
+		lineageTag: 5202b6ea-4cb0-4ba9-911e-2efa8f13e440
+		summarizeBy: none
+		sourceColumn: IndexName
+
+		annotation SummarizationSetBy = Automatic
+
+	column IndexType
+		dataType: int64
+		formatString: 0
+		lineageTag: 369d8910-5b6d-4d5e-9492-9be581b80127
+		summarizeBy: sum
+		sourceColumn: IndexType
+
+		annotation SummarizationSetBy = Automatic
+
+	column StatisticsName
+		dataType: string
+		lineageTag: 685bbb07-ede7-4528-994e-53111ebc64fc
+		summarizeBy: none
+		sourceColumn: StatisticsName
+
+		annotation SummarizationSetBy = Automatic
+
+	column PartitionNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 9782480c-6705-4cf4-bef5-fa5005e2ac22
+		summarizeBy: sum
+		sourceColumn: PartitionNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column ExtendedInfo
+		dataType: string
+		lineageTag: d46d3255-6ad1-4ce7-aa3b-592a10e12cae
+		summarizeBy: none
+		sourceColumn: ExtendedInfo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Command
+		dataType: string
+		lineageTag: 1f02d679-b625-40db-bfa9-205b32660a82
+		summarizeBy: none
+		sourceColumn: Command
+
+		annotation SummarizationSetBy = Automatic
+
+	column CommandType
+		dataType: string
+		lineageTag: 5e8ea21b-fc2b-4451-85a2-b1bda938114e
+		summarizeBy: none
+		sourceColumn: CommandType
+
+		annotation SummarizationSetBy = Automatic
+
+	column StartTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f0f5263b-a448-420d-af24-bcea19b2fa77
+		summarizeBy: none
+		sourceColumn: StartTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column EndTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0b786624-eb92-401c-9c8d-a04904c8edc9
+		summarizeBy: none
+		sourceColumn: EndTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column ErrorNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 7b6e4691-1df3-4b9d-bbd3-8dd2eae3ad8e
+		summarizeBy: sum
+		sourceColumn: ErrorNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column ErrorMessage
+		dataType: string
+		lineageTag: 71e33297-a564-4af6-b188-b8bdae058fa4
+		summarizeBy: none
+		sourceColumn: ErrorMessage
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'f_Ola Command Log' = m
+		mode: import
+		source =
+				let
+				    Source = #"Source Master DB",
+				    dbo_CommandLog = try Source{[Schema="dbo",Item="CommandLog"]}[Data] otherwise #table(type table [ID=Int64.Type, DatabaseName=text, SchemaName=text, ObjectName=text, ObjectType=text, IndexName=text, IndexType=Int64.Type, StatisticsName=text, PartitionNumber=Int64.Type, ExtendedInfo=text, Command=text, CommandType=text, StartTime=datetime, EndTime=datetime, ErrorNumber=Int64.Type, ErrorMessage=text], {}),
+				    #"Changed Type" = Table.TransformColumnTypes(dbo_CommandLog,{{"ID", Int64.Type}, {"DatabaseName", type text}, {"SchemaName", type text}, {"ObjectName", type text}, {"ObjectType", type text}, {"IndexName", type text}, {"IndexType", Int64.Type}, {"StatisticsName", type text}, {"PartitionNumber", Int64.Type}, {"ExtendedInfo", type text}, {"Command", type text}, {"CommandType", type text}, {"StartTime", type datetime}, {"EndTime", type datetime}, {"ErrorNumber", Int64.Type}, {"ErrorMessage", type text}})
+				in
+				    #"Changed Type"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

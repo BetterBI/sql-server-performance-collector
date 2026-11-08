@@ -1,0 +1,114 @@
+table 'f_Wait Stats'
+	lineageTag: 4056b467-21c9-4b6a-ad83-e452aa6a040d
+
+	column PerformanceWaitStatsId
+		dataType: int64
+		formatString: 0
+		lineageTag: cffa75a9-d42e-4eaa-9abc-f814b6b6c7fb
+		summarizeBy: count
+		sourceColumn: PerformanceWaitStatsId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CollectionRunId
+		dataType: int64
+		formatString: 0
+		lineageTag: 19390526-8962-4092-9add-b153436437b2
+		summarizeBy: none
+		sourceColumn: CollectionRunId
+
+		annotation SummarizationSetBy = Automatic
+
+	column CaptureTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a46e3d1b-9f03-4582-9e11-0975f58a0435
+		summarizeBy: none
+		sourceColumn: CaptureTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column SqlServerStartTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a0f7c26e-2fca-4f8a-9d8c-6a97e8c4ccb1
+		summarizeBy: none
+		sourceColumn: SqlServerStartTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column ServerName
+		dataType: string
+		lineageTag: c8723003-a9cb-4ca3-9090-71af10395897
+		summarizeBy: none
+		sourceColumn: ServerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column WaitType
+		dataType: string
+		lineageTag: 4c10902d-2e5d-4f32-abbd-6797d8d256d0
+		summarizeBy: none
+		sourceColumn: WaitType
+
+		annotation SummarizationSetBy = Automatic
+
+	column WaitingTasksCount
+		dataType: int64
+		formatString: 0
+		lineageTag: fd984c6e-deb4-4d01-be9c-099a596949a1
+		summarizeBy: sum
+		sourceColumn: WaitingTasksCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column WaitTimeMs
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c640225-2069-4c3c-8f8d-c7ca16935559
+		summarizeBy: sum
+		sourceColumn: WaitTimeMs
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaxWaitTimeMs
+		dataType: int64
+		formatString: 0
+		lineageTag: 646e8b5c-cf16-4e45-98ac-4fe750783128
+		summarizeBy: max
+		sourceColumn: MaxWaitTimeMs
+
+		annotation SummarizationSetBy = Automatic
+
+	column SignalWaitTimeMs
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b240394-0aec-4b48-a4c8-70b734ca4426
+		summarizeBy: sum
+		sourceColumn: SignalWaitTimeMs
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerformanceCollectorRun
+		dataType: string
+		lineageTag: a67a97dc-c9f0-4474-bc42-d0b1be6bea72
+		summarizeBy: none
+		sourceColumn: PerformanceCollectorRun
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'f_Wait Stats' = m
+		mode: import
+		source =
+				let
+				    Source = #"Source Master DB",
+				    dbo_PerformanceWaitStats = Source{[Schema="dbo",Item="PerformanceWaitStats"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceWaitStats,{{"PerformanceWaitStatsId", Int64.Type}, {"CollectionRunId", Int64.Type}, {"CaptureTime", type datetime}, {"SqlServerStartTime", type datetime}, {"ServerName", type text}, {"WaitType", type text}, {"WaitingTasksCount", Int64.Type}, {"WaitTimeMs", Int64.Type}, {"MaxWaitTimeMs", Int64.Type}, {"SignalWaitTimeMs", Int64.Type}, {"PerformanceCollectorRun", type any}})
+				in
+				    #"Changed Type"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
