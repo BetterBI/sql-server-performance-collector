@@ -12,14 +12,13 @@ table 'f_File IO'
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column CollectionRunId
-		dataType: double
+		dataType: int64
+		formatString: 0
 		lineageTag: f18ae127-6943-4732-8ece-eebdc1be8600
-		summarizeBy: count
+		summarizeBy: none
 		sourceColumn: CollectionRunId
 
 		annotation SummarizationSetBy = Automatic
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column CaptureTime
 		dataType: dateTime
@@ -203,7 +202,7 @@ table 'f_File IO'
 				let
 				    Source = #"Source Master DB",
 				    dbo_PerformanceFileIo = Source{[Schema="dbo",Item="PerformanceFileIo"]}[Data],
-				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceFileIo,{{"PerformanceFileIoId", type number}, {"CollectionRunId", type number}, {"CaptureTime", type datetime}, {"SqlServerStartTime", type datetime}, {"ServerName", type text}, {"DatabaseId", type number}, {"DatabaseName", type any}, {"FileId", type number}, {"LogicalFileName", type any}, {"PhysicalFileName", type text}, {"FileType", type text}, {"NumOfReads", type number}, {"NumOfBytesRead", type number}, {"IoStallReadMs", type number}, {"NumOfWrites", type number}, {"NumOfBytesWritten", type number}, {"IoStallWriteMs", type number}, {"IoStallQueuedReadMs", type number}, {"IoStallQueuedWriteMs", type number}, {"SizeOnDiskBytes", type number}, {"PerformanceCollectorRun", type any}})
+				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceFileIo,{{"PerformanceFileIoId", type number}, {"CollectionRunId", Int64.Type}, {"CaptureTime", type datetime}, {"SqlServerStartTime", type datetime}, {"ServerName", type text}, {"DatabaseId", type number}, {"DatabaseName", type any}, {"FileId", type number}, {"LogicalFileName", type any}, {"PhysicalFileName", type text}, {"FileType", type text}, {"NumOfReads", type number}, {"NumOfBytesRead", type number}, {"IoStallReadMs", type number}, {"NumOfWrites", type number}, {"NumOfBytesWritten", type number}, {"IoStallWriteMs", type number}, {"IoStallQueuedReadMs", type number}, {"IoStallQueuedWriteMs", type number}, {"SizeOnDiskBytes", type number}, {"PerformanceCollectorRun", type any}})
 				in
 				    #"Changed Type"
 
@@ -212,4 +211,3 @@ table 'f_File IO'
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-

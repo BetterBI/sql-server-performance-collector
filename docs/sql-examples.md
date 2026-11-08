@@ -15,6 +15,7 @@ DECLARE @JobName sysname = N'PerformanceCollector - Hourly';
 DECLARE @ScheduleName sysname = N'PerformanceCollector - Hourly at minute 17';
 DECLARE @JobId uniqueidentifier;
 DECLARE @ScheduleId int;
+DECLARE @StepId int;
 DECLARE @CollectorCommand nvarchar(max) =
     N'USE master; EXEC dbo.PerformanceCollector @RetentionDays=90, @Scope=N''MissingIndex,WaitStats,ServerResource,FileIo'', @Databases=N''USER_DATABASES'';';
 
@@ -34,14 +35,14 @@ ELSE
         @enabled = 1,
         @description = N'Collects hourly SQL Server performance history.';
 
-IF EXISTS
-(
-    SELECT 1 FROM dbo.sysjobsteps
-    WHERE job_id = @JobId AND step_name = N'Collect performance data'
-)
+SELECT @StepId = step_id
+FROM dbo.sysjobsteps
+WHERE job_id = @JobId AND step_name = N'Collect performance data';
+
+IF @StepId IS NOT NULL
     EXEC dbo.sp_update_jobstep
         @job_id = @JobId,
-        @step_name = N'Collect performance data',
+        @step_id = @StepId,
         @subsystem = N'TSQL',
         @database_name = N'master',
         @command = @CollectorCommand,

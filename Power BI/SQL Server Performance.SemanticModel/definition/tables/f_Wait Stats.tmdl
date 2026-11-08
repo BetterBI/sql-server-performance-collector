@@ -75,7 +75,7 @@ table 'f_Wait Stats'
 		dataType: int64
 		formatString: 0
 		lineageTag: 646e8b5c-cf16-4e45-98ac-4fe750783128
-		summarizeBy: sum
+		summarizeBy: max
 		sourceColumn: MaxWaitTimeMs
 
 		annotation SummarizationSetBy = Automatic
@@ -112,4 +112,3 @@ table 'f_Wait Stats'
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-

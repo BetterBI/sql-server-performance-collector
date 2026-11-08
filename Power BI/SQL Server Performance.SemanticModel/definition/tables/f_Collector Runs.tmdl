@@ -126,8 +126,7 @@ table 'f_Collector Runs'
 		annotation SummarizationSetBy = Automatic
 
 	column CollectorVersion
-		dataType: int64
-		formatString: 0
+		dataType: string
 		lineageTag: ce0f6a97-7acf-436d-8cda-1685270acc62
 		summarizeBy: none
 		sourceColumn: CollectorVersion
@@ -172,7 +171,7 @@ table 'f_Collector Runs'
 				let
 				    Source = #"Source Master DB",
 				    dbo_PerformanceCollectorRun = Source{[Schema="dbo",Item="PerformanceCollectorRun"]}[Data],
-				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceCollectorRun,{{"CollectionRunId", Int64.Type}, {"ServerName", type text}, {"StartTime", type datetime}, {"EndTime", type datetime}, {"SqlServerStartTime", type datetime}, {"RetentionDays", Int64.Type}, {"DatabaseScope", type text}, {"WaitStatsRows", Int64.Type}, {"FileIoRows", Int64.Type}, {"ServerResourceRows", Int64.Type}, {"MissingIndexRows", Int64.Type}, {"Succeeded", type logical}, {"ErrorNumber", type number}, {"ErrorMessage", type text}, {"CollectorVersion", Int64.Type}, {"PerformanceFileIo", type any}, {"PerformanceMissingIndex", type any}, {"PerformanceServerResource", type any}, {"PerformanceWaitStats", type any}})
+				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceCollectorRun,{{"CollectionRunId", Int64.Type}, {"ServerName", type text}, {"StartTime", type datetime}, {"EndTime", type datetime}, {"SqlServerStartTime", type datetime}, {"RetentionDays", Int64.Type}, {"DatabaseScope", type text}, {"WaitStatsRows", Int64.Type}, {"FileIoRows", Int64.Type}, {"ServerResourceRows", Int64.Type}, {"MissingIndexRows", Int64.Type}, {"Succeeded", type logical}, {"ErrorNumber", type number}, {"ErrorMessage", type text}, {"CollectorVersion", type text}, {"PerformanceFileIo", type any}, {"PerformanceMissingIndex", type any}, {"PerformanceServerResource", type any}, {"PerformanceWaitStats", type any}})
 				in
 				    #"Changed Type"
 
@@ -181,4 +180,3 @@ table 'f_Collector Runs'
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-

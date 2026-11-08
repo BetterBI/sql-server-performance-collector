@@ -182,6 +182,16 @@ BEGIN
 END;
 GO
 
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID(N'dbo.PerformanceWaitStats') AND name = N'IX_PerformanceWaitStats_CollectionRunId')
+    CREATE INDEX IX_PerformanceWaitStats_CollectionRunId ON dbo.PerformanceWaitStats(CollectionRunId);
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID(N'dbo.PerformanceFileIo') AND name = N'IX_PerformanceFileIo_CollectionRunId')
+    CREATE INDEX IX_PerformanceFileIo_CollectionRunId ON dbo.PerformanceFileIo(CollectionRunId);
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID(N'dbo.PerformanceServerResource') AND name = N'IX_PerformanceServerResource_CollectionRunId')
+    CREATE INDEX IX_PerformanceServerResource_CollectionRunId ON dbo.PerformanceServerResource(CollectionRunId);
+IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID(N'dbo.PerformanceMissingIndex') AND name = N'IX_PerformanceMissingIndex_CollectionRunId')
+    CREATE INDEX IX_PerformanceMissingIndex_CollectionRunId ON dbo.PerformanceMissingIndex(CollectionRunId);
+GO
+
 CREATE OR ALTER PROCEDURE dbo.PerformanceCollector
     @RetentionDays int = 90,
     @Scope nvarchar(100) = N'MissingIndex',
@@ -428,6 +438,7 @@ BEGIN
                     'SHA2_256',
                     CONCAT
                     (
+                        CONVERT(nvarchar(max), N''),
                         CONVERT(nvarchar(11), mid.database_id), N'|',
                         CONVERT(nvarchar(11), mid.object_id), N'|',
                         COALESCE(mid.equality_columns, N''), N'|',

@@ -140,7 +140,7 @@ table 'f_Ola Command Log'
 		source =
 				let
 				    Source = #"Source Master DB",
-				    dbo_CommandLog = Source{[Schema="dbo",Item="CommandLog"]}[Data],
+				    dbo_CommandLog = try Source{[Schema="dbo",Item="CommandLog"]}[Data] otherwise #table(type table [ID=Int64.Type, DatabaseName=text, SchemaName=text, ObjectName=text, ObjectType=text, IndexName=text, IndexType=Int64.Type, StatisticsName=text, PartitionNumber=Int64.Type, ExtendedInfo=text, Command=text, CommandType=text, StartTime=datetime, EndTime=datetime, ErrorNumber=Int64.Type, ErrorMessage=text], {}),
 				    #"Changed Type" = Table.TransformColumnTypes(dbo_CommandLog,{{"ID", Int64.Type}, {"DatabaseName", type text}, {"SchemaName", type text}, {"ObjectName", type text}, {"ObjectType", type text}, {"IndexName", type text}, {"IndexType", Int64.Type}, {"StatisticsName", type text}, {"PartitionNumber", Int64.Type}, {"ExtendedInfo", type text}, {"Command", type text}, {"CommandType", type text}, {"StartTime", type datetime}, {"EndTime", type datetime}, {"ErrorNumber", Int64.Type}, {"ErrorMessage", type text}})
 				in
 				    #"Changed Type"
@@ -150,4 +150,3 @@ table 'f_Ola Command Log'
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-

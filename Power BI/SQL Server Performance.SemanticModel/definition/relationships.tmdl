@@ -8,3 +8,14 @@ relationship AutoDetected_193b7187-82c4-4aa6-a70e-7cb449d39626
 	fromColumn: 'f_Wait Stats'.CollectionRunId
 	toColumn: 'f_Collector Runs'.CollectionRunId
 
+relationship AutoDetected_5402a870-2076-4b9c-9acf-04b4d253bd9e
+	fromCardinality: many
+	fromColumn: 'f_File IO'.CollectionRunId
+	toCardinality: one
+	toColumn: 'f_Collector Runs'.CollectionRunId
+
+relationship AutoDetected_952e6c92-ddfd-4e8d-a189-67eb8406f29e
+	fromCardinality: many
+	fromColumn: f_MissingIndex.CollectionRunId
+	toCardinality: one
+	toColumn: 'f_Collector Runs'.CollectionRunId

@@ -12,14 +12,13 @@ table f_MissingIndex
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column CollectionRunId
-		dataType: double
+		dataType: int64
+		formatString: 0
 		lineageTag: 361498d1-85f6-4d77-9afb-a9f17c588fe5
-		summarizeBy: count
+		summarizeBy: none
 		sourceColumn: CollectionRunId
 
 		annotation SummarizationSetBy = Automatic
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	column CaptureTime
 		dataType: dateTime
@@ -293,7 +292,7 @@ table f_MissingIndex
 				let
 				    Source = #"Source Master DB",
 				    dbo_PerformanceMissingIndex = Source{[Schema="dbo",Item="PerformanceMissingIndex"]}[Data],
-				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceMissingIndex,{{"PerformanceMissingIndexId", type number}, {"CollectionRunId", type number}, {"CaptureTime", type datetime}, {"SqlServerStartTime", type datetime}, {"ServerName", type text}, {"DatabaseId", type number}, {"DatabaseName", type any}, {"ObjectId", type number}, {"SchemaName", type any}, {"ObjectName", type any}, {"IndexHandle", type number}, {"IndexGroupHandle", type number}, {"RecommendationHash", type any}, {"EqualityColumns", type text}, {"InequalityColumns", type text}, {"IncludedColumns", type text}, {"UniqueCompiles", type number}, {"UserSeeks", type number}, {"UserScans", type number}, {"LastUserSeek", type datetime}, {"LastUserScan", type datetime}, {"AvgTotalUserCost", type number}, {"AvgUserImpact", type number}, {"SystemSeeks", type number}, {"SystemScans", type number}, {"LastSystemSeek", type datetime}, {"LastSystemScan", type datetime}, {"AvgTotalSystemCost", type number}, {"AvgSystemImpact", type number}, {"ImprovementMeasure", type number}, {"PerformanceCollectorRun", type any}})
+				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceMissingIndex,{{"PerformanceMissingIndexId", type number}, {"CollectionRunId", Int64.Type}, {"CaptureTime", type datetime}, {"SqlServerStartTime", type datetime}, {"ServerName", type text}, {"DatabaseId", type number}, {"DatabaseName", type any}, {"ObjectId", type number}, {"SchemaName", type any}, {"ObjectName", type any}, {"IndexHandle", type number}, {"IndexGroupHandle", type number}, {"RecommendationHash", type any}, {"EqualityColumns", type text}, {"InequalityColumns", type text}, {"IncludedColumns", type text}, {"UniqueCompiles", type number}, {"UserSeeks", type number}, {"UserScans", type number}, {"LastUserSeek", type datetime}, {"LastUserScan", type datetime}, {"AvgTotalUserCost", type number}, {"AvgUserImpact", type number}, {"SystemSeeks", type number}, {"SystemScans", type number}, {"LastSystemSeek", type datetime}, {"LastSystemScan", type datetime}, {"AvgTotalSystemCost", type number}, {"AvgSystemImpact", type number}, {"ImprovementMeasure", type number}, {"PerformanceCollectorRun", type any}})
 				in
 				    #"Changed Type"
 
@@ -302,4 +301,3 @@ table f_MissingIndex
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
-
