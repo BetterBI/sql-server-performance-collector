@@ -112,11 +112,9 @@ DECLARE @CaptureTimeUtc datetime2(0) = SYSUTCDATETIME();
 DECLARE @SqlServerStartTimeUtc datetime2(0);
 DECLARE @ElapsedMilliseconds bigint;
 DECLARE @ServerName nvarchar(128) = CONVERT(nvarchar(128), SERVERPROPERTY(N''ServerName''));
-SELECT @ElapsedMilliseconds = ms_ticks - sqlserver_start_time_ms_ticks
+SELECT @ElapsedMilliseconds = CONVERT(bigint, ms_ticks)
 FROM sys.dm_os_sys_info;
-SET @SqlServerStartTimeUtc = DATEADD(MILLISECOND,
-    -CONVERT(int, @ElapsedMilliseconds % 86400000),
-    DATEADD(DAY, -CONVERT(int, @ElapsedMilliseconds / 86400000), @CaptureTimeUtc));
+SET @SqlServerStartTimeUtc = DATEADD(MILLISECOND, -@ElapsedMilliseconds, @CaptureTimeUtc);
 INSERT dbo.MissingIndexLog
 (CaptureBatchId, CaptureTimeUtc, SqlServerStartTimeUtc, ServerName,
  DatabaseId, DatabaseName, ObjectId, SchemaName, ObjectName,
