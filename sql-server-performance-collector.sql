@@ -18,7 +18,8 @@ DECLARE @SqlServerStartTimeUtc datetime2(0);
 DECLARE @ElapsedMilliseconds bigint;
 DECLARE @ServerName nvarchar(128) = CONVERT(nvarchar(128), SERVERPROPERTY(N'ServerName'));
 
-SELECT @ElapsedMilliseconds = ms_ticks - sqlserver_start_time_ms_ticks
+SELECT
+    @ElapsedMilliseconds = DATEDIFF_BIG(MILLISECOND, sqlserver_start_time, SYSDATETIME())
 FROM sys.dm_os_sys_info;
 
 SET @SqlServerStartTimeUtc = DATEADD
