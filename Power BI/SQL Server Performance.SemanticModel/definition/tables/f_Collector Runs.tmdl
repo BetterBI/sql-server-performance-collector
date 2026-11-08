@@ -1,0 +1,184 @@
+table 'f_Collector Runs'
+	lineageTag: 9ffc7203-77a5-4841-a458-50f384b54556
+
+	column CollectionRunId
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ac4bd6c-a1ae-4d56-93a2-01b6af9ea660
+		summarizeBy: none
+		sourceColumn: CollectionRunId
+
+		annotation SummarizationSetBy = Automatic
+
+	column ServerName
+		dataType: string
+		lineageTag: 243a8c2c-8962-4bef-b35b-20552f4f843b
+		summarizeBy: none
+		sourceColumn: ServerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StartTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a591ffbf-000f-4d90-8951-337dabf02a1b
+		summarizeBy: none
+		sourceColumn: StartTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column EndTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5a2219c6-0bf6-46ba-83af-427239ccbc02
+		summarizeBy: none
+		sourceColumn: EndTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column SqlServerStartTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f54cb60c-a77d-4576-ae29-d77de3269218
+		summarizeBy: none
+		sourceColumn: SqlServerStartTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column RetentionDays
+		dataType: int64
+		formatString: 0
+		lineageTag: f49f4784-e339-4b07-b18c-24bfb980f85f
+		summarizeBy: none
+		sourceColumn: RetentionDays
+
+		annotation SummarizationSetBy = Automatic
+
+	column DatabaseScope
+		dataType: string
+		lineageTag: 2693b7b5-b506-4b24-b705-09f377e6469e
+		summarizeBy: none
+		sourceColumn: DatabaseScope
+
+		annotation SummarizationSetBy = Automatic
+
+	column WaitStatsRows
+		dataType: int64
+		formatString: 0
+		lineageTag: c2216163-602b-42b2-a63a-4cb02868dbbf
+		summarizeBy: none
+		sourceColumn: WaitStatsRows
+
+		annotation SummarizationSetBy = Automatic
+
+	column FileIoRows
+		dataType: int64
+		formatString: 0
+		lineageTag: d1e71614-27c7-4555-acd2-8cf8ac8c387f
+		summarizeBy: none
+		sourceColumn: FileIoRows
+
+		annotation SummarizationSetBy = Automatic
+
+	column ServerResourceRows
+		dataType: int64
+		formatString: 0
+		lineageTag: 4cbd25a1-7d34-4fb2-82cc-d68ce81830be
+		summarizeBy: none
+		sourceColumn: ServerResourceRows
+
+		annotation SummarizationSetBy = Automatic
+
+	column MissingIndexRows
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ced87c5-e9e6-4cdc-9fe5-07a5b23a2df9
+		summarizeBy: none
+		sourceColumn: MissingIndexRows
+
+		annotation SummarizationSetBy = Automatic
+
+	column Succeeded
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7eeb4b14-314e-4d3a-aab0-1fc34a4179b1
+		summarizeBy: none
+		sourceColumn: Succeeded
+
+		annotation SummarizationSetBy = Automatic
+
+	column ErrorNumber
+		dataType: double
+		lineageTag: 1aebbfd0-aa6c-4ee5-84b8-085aa64f0cee
+		summarizeBy: none
+		sourceColumn: ErrorNumber
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ErrorMessage
+		dataType: string
+		lineageTag: 88cdb064-e50a-4d08-93b5-a1a6a3fb50cd
+		summarizeBy: none
+		sourceColumn: ErrorMessage
+
+		annotation SummarizationSetBy = Automatic
+
+	column CollectorVersion
+		dataType: int64
+		formatString: 0
+		lineageTag: ce0f6a97-7acf-436d-8cda-1685270acc62
+		summarizeBy: none
+		sourceColumn: CollectorVersion
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerformanceFileIo
+		dataType: string
+		lineageTag: 4dc8570d-5a38-4b34-a91a-17f094348437
+		summarizeBy: none
+		sourceColumn: PerformanceFileIo
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerformanceMissingIndex
+		dataType: string
+		lineageTag: 9a2ddf92-b814-4655-bbe9-a0c6093e29aa
+		summarizeBy: none
+		sourceColumn: PerformanceMissingIndex
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerformanceServerResource
+		dataType: string
+		lineageTag: 2da45223-87e0-43f7-ba94-e4bd0a080e20
+		summarizeBy: none
+		sourceColumn: PerformanceServerResource
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerformanceWaitStats
+		dataType: string
+		lineageTag: b4fe54ef-04f2-463a-a798-bcad862fa46b
+		summarizeBy: none
+		sourceColumn: PerformanceWaitStats
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'f_Collector Runs' = m
+		mode: import
+		source =
+				let
+				    Source = #"Source Master DB",
+				    dbo_PerformanceCollectorRun = Source{[Schema="dbo",Item="PerformanceCollectorRun"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceCollectorRun,{{"CollectionRunId", Int64.Type}, {"ServerName", type text}, {"StartTime", type datetime}, {"EndTime", type datetime}, {"SqlServerStartTime", type datetime}, {"RetentionDays", Int64.Type}, {"DatabaseScope", type text}, {"WaitStatsRows", Int64.Type}, {"FileIoRows", Int64.Type}, {"ServerResourceRows", Int64.Type}, {"MissingIndexRows", Int64.Type}, {"Succeeded", type logical}, {"ErrorNumber", type number}, {"ErrorMessage", type text}, {"CollectorVersion", Int64.Type}, {"PerformanceFileIo", type any}, {"PerformanceMissingIndex", type any}, {"PerformanceServerResource", type any}, {"PerformanceWaitStats", type any}})
+				in
+				    #"Changed Type"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

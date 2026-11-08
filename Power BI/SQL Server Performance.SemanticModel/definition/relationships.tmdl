@@ -1,0 +1,10 @@
+relationship AutoDetected_0ef97f70-1891-4514-a86d-0bfee36ff2ee
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'f_Server Resource'.CollectionRunId
+	toColumn: 'f_Collector Runs'.CollectionRunId
+
+relationship AutoDetected_193b7187-82c4-4aa6-a70e-7cb449d39626
+	fromColumn: 'f_Wait Stats'.CollectionRunId
+	toColumn: 'f_Collector Runs'.CollectionRunId
+

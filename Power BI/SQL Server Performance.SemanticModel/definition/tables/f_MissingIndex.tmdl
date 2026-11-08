@@ -1,0 +1,305 @@
+table f_MissingIndex
+	lineageTag: d81b16d6-7c4f-4fd8-84d8-3571d1cfad24
+
+	column PerformanceMissingIndexId
+		dataType: double
+		lineageTag: e49e22b8-9d45-4c52-a2c7-4a4cdb50089f
+		summarizeBy: count
+		sourceColumn: PerformanceMissingIndexId
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CollectionRunId
+		dataType: double
+		lineageTag: 361498d1-85f6-4d77-9afb-a9f17c588fe5
+		summarizeBy: count
+		sourceColumn: CollectionRunId
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CaptureTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4526e0d0-d4ac-4186-b9d3-6a159447cc89
+		summarizeBy: none
+		sourceColumn: CaptureTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column SqlServerStartTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 85685474-ed1f-4c6f-9a2d-d582643a8c12
+		summarizeBy: none
+		sourceColumn: SqlServerStartTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column ServerName
+		dataType: string
+		lineageTag: a3bc4825-478a-45e9-a456-cdef80a26708
+		summarizeBy: none
+		sourceColumn: ServerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column DatabaseId
+		dataType: double
+		lineageTag: b392279e-ecea-4076-848b-8bdd637537fc
+		summarizeBy: count
+		sourceColumn: DatabaseId
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DatabaseName
+		dataType: string
+		lineageTag: df1a2b96-301b-4b35-9891-e575da447063
+		summarizeBy: none
+		sourceColumn: DatabaseName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ObjectId
+		dataType: double
+		lineageTag: 86e5def4-c4c1-4cef-90c2-830e7c12cd90
+		summarizeBy: count
+		sourceColumn: ObjectId
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SchemaName
+		dataType: string
+		lineageTag: b2e43dd6-65a9-4ad5-8648-6e02f83d8c48
+		summarizeBy: none
+		sourceColumn: SchemaName
+
+		annotation SummarizationSetBy = Automatic
+
+	column ObjectName
+		dataType: string
+		lineageTag: 6083151e-92d0-4fe8-843b-e2c83d49f5c0
+		summarizeBy: none
+		sourceColumn: ObjectName
+
+		annotation SummarizationSetBy = Automatic
+
+	column IndexHandle
+		dataType: double
+		lineageTag: 42a5d47c-618e-4d9f-90d6-f86b5a8deaee
+		summarizeBy: sum
+		sourceColumn: IndexHandle
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IndexGroupHandle
+		dataType: double
+		lineageTag: d9404d55-4d61-4391-aafb-d79721fd7ca3
+		summarizeBy: sum
+		sourceColumn: IndexGroupHandle
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RecommendationHash
+		dataType: string
+		lineageTag: 06a58cda-54f6-4e72-ac0d-f2a4d594c6ec
+		summarizeBy: none
+		sourceColumn: RecommendationHash
+
+		annotation SummarizationSetBy = Automatic
+
+	column EqualityColumns
+		dataType: string
+		lineageTag: 8068d1ff-e423-4a88-ab40-9cc38217d57b
+		summarizeBy: none
+		sourceColumn: EqualityColumns
+
+		annotation SummarizationSetBy = Automatic
+
+	column InequalityColumns
+		dataType: string
+		lineageTag: 5f1c5758-7d1c-4a99-b3cb-55489290ac81
+		summarizeBy: none
+		sourceColumn: InequalityColumns
+
+		annotation SummarizationSetBy = Automatic
+
+	column IncludedColumns
+		dataType: string
+		lineageTag: e0a9a2e7-026a-44a2-a378-6efc9d64fb90
+		summarizeBy: none
+		sourceColumn: IncludedColumns
+
+		annotation SummarizationSetBy = Automatic
+
+	column UniqueCompiles
+		dataType: double
+		lineageTag: 02de1ea1-902a-4a7a-a56b-2c217a2b6f48
+		summarizeBy: sum
+		sourceColumn: UniqueCompiles
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UserSeeks
+		dataType: double
+		lineageTag: e7644510-980c-4ae6-86f5-1bfe10be4ded
+		summarizeBy: sum
+		sourceColumn: UserSeeks
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UserScans
+		dataType: double
+		lineageTag: 93f63a2b-f204-40c8-b843-f77906b50383
+		summarizeBy: sum
+		sourceColumn: UserScans
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LastUserSeek
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e68a3304-24dc-4098-a0fd-8eebd57cb35e
+		summarizeBy: none
+		sourceColumn: LastUserSeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastUserScan
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 60f0a929-0281-4ecf-a580-7a26e13353fb
+		summarizeBy: none
+		sourceColumn: LastUserScan
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvgTotalUserCost
+		dataType: double
+		lineageTag: 87f42505-ff6b-42d4-aafa-21c441b11688
+		summarizeBy: sum
+		sourceColumn: AvgTotalUserCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AvgUserImpact
+		dataType: double
+		lineageTag: cc4fd886-9191-480a-a3f0-e2d87e3164c5
+		summarizeBy: sum
+		sourceColumn: AvgUserImpact
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SystemSeeks
+		dataType: double
+		lineageTag: 88faa539-e62f-42e6-b995-3a16541a40db
+		summarizeBy: sum
+		sourceColumn: SystemSeeks
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SystemScans
+		dataType: double
+		lineageTag: 4757b392-c9fe-4cce-a536-d7bc13e63391
+		summarizeBy: sum
+		sourceColumn: SystemScans
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LastSystemSeek
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 238b2083-59f7-4cb8-bccd-c6799c4e925c
+		summarizeBy: none
+		sourceColumn: LastSystemSeek
+
+		annotation SummarizationSetBy = Automatic
+
+	column LastSystemScan
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2f26270d-1da4-41e7-8e5c-968de95f9bd7
+		summarizeBy: none
+		sourceColumn: LastSystemScan
+
+		annotation SummarizationSetBy = Automatic
+
+	column AvgTotalSystemCost
+		dataType: double
+		lineageTag: eec4c3ab-076f-4261-9b87-a200621d76b2
+		summarizeBy: sum
+		sourceColumn: AvgTotalSystemCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AvgSystemImpact
+		dataType: double
+		lineageTag: 14e1a9fb-1df9-4c21-90e5-7827c6b23793
+		summarizeBy: sum
+		sourceColumn: AvgSystemImpact
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ImprovementMeasure
+		dataType: double
+		lineageTag: c9b255e3-4fb2-4893-a119-734c11b55d32
+		summarizeBy: sum
+		sourceColumn: ImprovementMeasure
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PerformanceCollectorRun
+		dataType: string
+		lineageTag: 8dd8f47c-bef7-45fe-ae1f-718beaf16770
+		summarizeBy: none
+		sourceColumn: PerformanceCollectorRun
+
+		annotation SummarizationSetBy = Automatic
+
+	partition f_MissingIndex = m
+		mode: import
+		source =
+				let
+				    Source = #"Source Master DB",
+				    dbo_PerformanceMissingIndex = Source{[Schema="dbo",Item="PerformanceMissingIndex"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dbo_PerformanceMissingIndex,{{"PerformanceMissingIndexId", type number}, {"CollectionRunId", type number}, {"CaptureTime", type datetime}, {"SqlServerStartTime", type datetime}, {"ServerName", type text}, {"DatabaseId", type number}, {"DatabaseName", type any}, {"ObjectId", type number}, {"SchemaName", type any}, {"ObjectName", type any}, {"IndexHandle", type number}, {"IndexGroupHandle", type number}, {"RecommendationHash", type any}, {"EqualityColumns", type text}, {"InequalityColumns", type text}, {"IncludedColumns", type text}, {"UniqueCompiles", type number}, {"UserSeeks", type number}, {"UserScans", type number}, {"LastUserSeek", type datetime}, {"LastUserScan", type datetime}, {"AvgTotalUserCost", type number}, {"AvgUserImpact", type number}, {"SystemSeeks", type number}, {"SystemScans", type number}, {"LastSystemSeek", type datetime}, {"LastSystemScan", type datetime}, {"AvgTotalSystemCost", type number}, {"AvgSystemImpact", type number}, {"ImprovementMeasure", type number}, {"PerformanceCollectorRun", type any}})
+				in
+				    #"Changed Type"
+
+	changedProperty = Name
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

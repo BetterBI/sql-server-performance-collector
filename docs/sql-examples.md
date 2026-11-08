@@ -1,143 +1,49 @@
 # SQL Examples
 
-These examples show the supporting installation, SQL Server Agent, and validation steps. The runnable collector is [`sql-server-performance-collector.sql`](../sql-server-performance-collector.sql). Developed by Thomas Grubbe Møller of BetterBI ApS.
-
-## Table and index example
-
-Run in a dedicated DBA/administration database. It creates the only permanent application table and is safe to rerun.
-
-```sql
-SET NOCOUNT ON;
-SET XACT_ABORT ON;
-
-IF OBJECT_ID(N'dbo.MissingIndexLog', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.MissingIndexLog
-    (
-        MissingIndexLogId      bigint IDENTITY(1,1) NOT NULL,
-        CaptureBatchId         uniqueidentifier NOT NULL,
-        CaptureTimeUtc         datetime2(0) NOT NULL,
-        SqlServerStartTimeUtc  datetime2(0) NOT NULL,
-        ServerName             nvarchar(128) NOT NULL,
-        DatabaseId             int NOT NULL,
-        DatabaseName           sysname NOT NULL,
-        ObjectId               int NOT NULL,
-        SchemaName             sysname NULL,
-        ObjectName             sysname NULL,
-        IndexHandle            int NOT NULL,
-        IndexGroupHandle       int NOT NULL,
-        RecommendationHash     binary(32) NOT NULL,
-        EqualityColumns        nvarchar(4000) NULL,
-        InequalityColumns      nvarchar(4000) NULL,
-        IncludedColumns        nvarchar(4000) NULL,
-        UniqueCompiles         bigint NOT NULL,
-        UserSeeks              bigint NOT NULL,
-        UserScans              bigint NOT NULL,
-        LastUserSeek           datetime NULL,
-        LastUserScan           datetime NULL,
-        AvgTotalUserCost       float NOT NULL,
-        AvgUserImpact          float NOT NULL,
-        SystemSeeks            bigint NOT NULL,
-        SystemScans            bigint NOT NULL,
-        LastSystemSeek         datetime NULL,
-        LastSystemScan         datetime NULL,
-        AvgTotalSystemCost     float NOT NULL,
-        AvgSystemImpact        float NOT NULL,
-        ImprovementMeasure AS
-        (
-            (CONVERT(float, UserSeeks) + CONVERT(float, UserScans))
-            * AvgTotalUserCost
-            * AvgUserImpact / 100.0
-        ) PERSISTED,
-        CONSTRAINT PK_MissingIndexLog
-            PRIMARY KEY CLUSTERED (MissingIndexLogId)
-    );
-END;
-
-IF NOT EXISTS
-(
-    SELECT 1 FROM sys.indexes
-    WHERE object_id = OBJECT_ID(N'dbo.MissingIndexLog')
-      AND name = N'IX_MissingIndexLog_CaptureTimeUtc'
-)
-    CREATE INDEX IX_MissingIndexLog_CaptureTimeUtc
-        ON dbo.MissingIndexLog (CaptureTimeUtc);
-
-IF NOT EXISTS
-(
-    SELECT 1 FROM sys.indexes
-    WHERE object_id = OBJECT_ID(N'dbo.MissingIndexLog')
-      AND name = N'IX_MissingIndexLog_Recommendation'
-)
-    CREATE INDEX IX_MissingIndexLog_Recommendation
-        ON dbo.MissingIndexLog
-        (
-            DatabaseId,
-            ObjectId,
-            RecommendationHash,
-            CaptureTimeUtc
-        )
-        INCLUDE
-        (
-            DatabaseName,
-            SchemaName,
-            ObjectName,
-            UserSeeks,
-            UserScans,
-            AvgUserImpact
-        );
-```
+These examples cover the SQL Server Agent schedule and validation. Install the tables and procedure by running [`sql-server-performance-collector.sql`](../sql-server-performance-collector.sql) in `master`.
 
 ## Agent job example
 
-Run in SQLCMD Mode from SQL Server Management Studio. Set `DBA_DATABASE` to the database containing `dbo.MissingIndexLog` and `dbo.CollectMissingIndexHistory`. This example creates or updates the hourly job; its step calls the collector procedure installed by [`sql-server-performance-collector.sql`](../sql-server-performance-collector.sql).
+Run in SQL Server Management Studio as a login allowed to manage SQL Server Agent jobs. The job captures all four scopes hourly at minute 17.
 
 ```sql
-:setvar DBA_DATABASE "DBA"
 USE msdb;
 SET NOCOUNT ON;
 SET XACT_ABORT ON;
 
-DECLARE @DatabaseName sysname = N'$(DBA_DATABASE)';
-DECLARE @JobName sysname = N'DBA - Collect Missing Index History';
-DECLARE @ScheduleName sysname = N'DBA - Hourly at minute 17';
+DECLARE @JobName sysname = N'PerformanceCollector - Hourly';
+DECLARE @ScheduleName sysname = N'PerformanceCollector - Hourly at minute 17';
 DECLARE @JobId uniqueidentifier;
 DECLARE @ScheduleId int;
-DECLARE @CollectorCommand nvarchar(max) = N'EXEC dbo.CollectMissingIndexHistory;';
+DECLARE @CollectorCommand nvarchar(max) =
+    N'USE master; EXEC dbo.PerformanceCollector @RetentionDays=90, @Scope=N''MissingIndex,WaitStats,ServerResource,FileIo'', @Databases=N''USER_DATABASES'';';
 
-IF DB_ID(@DatabaseName) IS NULL
-    THROW 50002, 'The DBA_DATABASE SQLCMD variable must name an existing database.', 1;
-IF OBJECT_ID(QUOTENAME(@DatabaseName) + N'.dbo.MissingIndexLog', N'U') IS NULL
-    THROW 50003, 'dbo.MissingIndexLog was not found in DBA_DATABASE.', 1;
+SELECT @JobId = job_id
+FROM dbo.sysjobs
+WHERE name = @JobName;
 
-IF EXISTS (SELECT 1 FROM dbo.sysjobs WHERE name = @JobName)
-BEGIN
-    EXEC dbo.sp_update_job
-        @job_name = @JobName,
-        @enabled = 1,
-        @description = N'Collects server-wide missing-index DMV history into dbo.MissingIndexLog.';
-    SELECT @JobId = job_id FROM dbo.sysjobs WHERE name = @JobName;
-END;
-ELSE
-BEGIN
+IF @JobId IS NULL
     EXEC dbo.sp_add_job
         @job_name = @JobName,
         @enabled = 1,
-        @description = N'Collects server-wide missing-index DMV history into dbo.MissingIndexLog.',
+        @description = N'Collects hourly SQL Server performance history.',
         @job_id = @JobId OUTPUT;
-END;
+ELSE
+    EXEC dbo.sp_update_job
+        @job_name = @JobName,
+        @enabled = 1,
+        @description = N'Collects hourly SQL Server performance history.';
 
 IF EXISTS
 (
     SELECT 1 FROM dbo.sysjobsteps
-    WHERE job_id = @JobId
-      AND step_name = N'Capture missing-index snapshot'
+    WHERE job_id = @JobId AND step_name = N'Collect performance data'
 )
     EXEC dbo.sp_update_jobstep
         @job_id = @JobId,
-        @step_name = N'Capture missing-index snapshot',
+        @step_name = N'Collect performance data',
         @subsystem = N'TSQL',
-        @database_name = @DatabaseName,
+        @database_name = N'master',
         @command = @CollectorCommand,
         @on_success_action = 1,
         @on_fail_action = 2,
@@ -146,9 +52,9 @@ IF EXISTS
 ELSE
     EXEC dbo.sp_add_jobstep
         @job_id = @JobId,
-        @step_name = N'Capture missing-index snapshot',
+        @step_name = N'Collect performance data',
         @subsystem = N'TSQL',
-        @database_name = @DatabaseName,
+        @database_name = N'master',
         @command = @CollectorCommand,
         @on_success_action = 1,
         @on_fail_action = 2,
@@ -192,33 +98,81 @@ IF NOT EXISTS (SELECT 1 FROM dbo.sysjobservers WHERE job_id = @JobId)
 
 ## Smoke-test example
 
-Run in the DBA database after a collector execution. No result rows is a valid outcome.
+Run in `master` after a collector execution. The latest run reports how many rows were captured for each implemented scope.
 
 ```sql
 SET NOCOUNT ON;
 
-IF OBJECT_ID(N'dbo.MissingIndexLog', N'U') IS NULL
-    THROW 51000, 'FAIL: dbo.MissingIndexLog was not created.', 1;
+IF OBJECT_ID(N'dbo.PerformanceCollectorRun', N'U') IS NULL
+    THROW 51000, 'FAIL: dbo.PerformanceCollectorRun was not created.', 1;
+IF OBJECT_ID(N'dbo.PerformanceWaitStats', N'U') IS NULL
+    THROW 51001, 'FAIL: dbo.PerformanceWaitStats was not created.', 1;
+IF OBJECT_ID(N'dbo.PerformanceFileIo', N'U') IS NULL
+    THROW 51002, 'FAIL: dbo.PerformanceFileIo was not created.', 1;
+IF OBJECT_ID(N'dbo.PerformanceServerResource', N'U') IS NULL
+    THROW 51003, 'FAIL: dbo.PerformanceServerResource was not created.', 1;
+IF OBJECT_ID(N'dbo.PerformanceMissingIndex', N'U') IS NULL
+    THROW 51004, 'FAIL: dbo.PerformanceMissingIndex was not created.', 1;
 
-IF NOT EXISTS
-(
-    SELECT 1 FROM sys.indexes
-    WHERE object_id = OBJECT_ID(N'dbo.MissingIndexLog')
-      AND name = N'IX_MissingIndexLog_CaptureTimeUtc'
-)
-    THROW 51001, 'FAIL: capture-time index was not created.', 1;
-
-IF NOT EXISTS
-(
-    SELECT 1 FROM sys.indexes
-    WHERE object_id = OBJECT_ID(N'dbo.MissingIndexLog')
-      AND name = N'IX_MissingIndexLog_Recommendation'
-)
-    THROW 51002, 'FAIL: recommendation index was not created.', 1;
+SELECT TOP (1)
+    CollectionRunId,
+    StartTime,
+    EndTime,
+    WaitStatsRows,
+    FileIoRows,
+    ServerResourceRows,
+    MissingIndexRows,
+    Succeeded,
+    ErrorNumber,
+    ErrorMessage
+FROM dbo.PerformanceCollectorRun
+ORDER BY CollectionRunId DESC;
 
 SELECT TOP (100)
-    CaptureTimeUtc,
-    SqlServerStartTimeUtc,
+    CaptureTime,
+    SqlServerStartTime,
+    ServerName,
+    WaitType,
+    WaitingTasksCount,
+    WaitTimeMs,
+    MaxWaitTimeMs,
+    SignalWaitTimeMs
+FROM dbo.PerformanceWaitStats
+ORDER BY CaptureTime DESC, WaitTimeMs DESC;
+
+SELECT TOP (100)
+    CaptureTime,
+    SqlServerStartTime,
+    ServerName,
+    DatabaseName,
+    LogicalFileName,
+    FileType,
+    NumOfReads,
+    IoStallReadMs,
+    NumOfWrites,
+    IoStallWriteMs,
+    SizeOnDiskBytes
+FROM dbo.PerformanceFileIo
+ORDER BY CaptureTime DESC, DatabaseName, LogicalFileName;
+
+SELECT TOP (100)
+    CaptureTime,
+    SqlServerStartTime,
+    ServerName,
+    TotalPhysicalMemoryKb,
+    AvailablePhysicalMemoryKb,
+    TotalServerMemoryKb,
+    TargetServerMemoryKb,
+    MemoryGrantsPending,
+    RunnableTasks,
+    PendingDiskIoCount,
+    BlockedRequests
+FROM dbo.PerformanceServerResource
+ORDER BY CaptureTime DESC;
+
+SELECT TOP (100)
+    CaptureTime,
+    SqlServerStartTime,
     ServerName,
     DatabaseName,
     SchemaName,
@@ -230,6 +184,6 @@ SELECT TOP (100)
     UserScans,
     AvgUserImpact,
     ImprovementMeasure
-FROM dbo.MissingIndexLog
-ORDER BY MissingIndexLogId DESC;
+FROM dbo.PerformanceMissingIndex
+ORDER BY CaptureTime DESC, ImprovementMeasure DESC;
 ```

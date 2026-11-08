@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "SQL Server Performance"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1e7f735a-1340-422e-829d-20b145d14dcd"
+  }
+}
