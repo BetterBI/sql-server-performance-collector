@@ -4,7 +4,7 @@ An open-source T-SQL collector for hourly history of SQL Server missing-index re
 
 ## Collector
 
-Run [`sql-server-performance-collector.sql`](sql-server-performance-collector.sql) in the dedicated DBA database to capture a snapshot and apply 90-day retention.
+Run [`sql-server-performance-collector.sql`](sql-server-performance-collector.sql) in the dedicated DBA database to install `dbo.CollectMissingIndexHistory`, capture a snapshot, and apply 90-day retention. SQL Server Agent calls this procedure for subsequent snapshots.
 
 The installation, Agent job, and smoke-test SQL are documented as examples in [SQL examples](docs/sql-examples.md). See the [deployment guide](docs/deployment.md) for requirements and setup.
 

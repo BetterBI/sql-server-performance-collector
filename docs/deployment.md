@@ -7,7 +7,7 @@ Version 1 stores hourly observations of server-wide missing-index recommendation
 - SQL Server 2016 or later.
 - A dedicated DBA/administration database. Do not install the table in a vendor or application database.
 - SQL Server Agent for the built-in schedule. SQL Server Express does not include SQL Server Agent.
-- The Agent job execution identity needs access to the DBA database and `SELECT`, `INSERT`, and `DELETE` rights on `dbo.MissingIndexLog`.
+- The Agent job execution identity needs access to the DBA database, `EXECUTE` on `dbo.CollectMissingIndexHistory`, and `SELECT`, `INSERT`, and `DELETE` rights on `dbo.MissingIndexLog`.
 - On SQL Server 2019 and earlier, grant `VIEW SERVER STATE`. On SQL Server 2022 and later, grant `VIEW SERVER PERFORMANCE STATE`.
 - The installer identity needs permission to manage SQL Server Agent jobs in `msdb`.
 
@@ -17,8 +17,8 @@ Metadata visibility can affect the schema and object names returned by `OBJECT_S
 
 1. Create or select a dedicated DBA database.
 2. Run the [table and index example](sql-examples.md#table-and-index-example) in that database. It is idempotent.
-3. Run [`sql-server-performance-collector.sql`](../sql-server-performance-collector.sql) once in the DBA database to capture an initial snapshot. A successful run with zero recommendations is valid.
-4. In SQL Server Management Studio, enable SQLCMD Mode and run the [Agent job example](sql-examples.md#agent-job-example). Set `DBA_DATABASE` to the dedicated database name. The example embeds executable T-SQL in the job step and does not depend on a local checkout.
+3. Run [`sql-server-performance-collector.sql`](../sql-server-performance-collector.sql) in the DBA database to install `dbo.CollectMissingIndexHistory` and capture an initial snapshot. Rerunning the script updates the procedure and captures another snapshot. A successful run with zero recommendations is valid.
+4. In SQL Server Management Studio, enable SQLCMD Mode and run the [Agent job example](sql-examples.md#agent-job-example). Set `DBA_DATABASE` to the dedicated database name. The job step calls the installed procedure and does not depend on a local checkout.
 5. The schedule runs hourly at minute 17. To capture immediately, start `DBA - Collect Missing Index History` manually in SQL Server Agent.
 6. Run the [smoke-test example](sql-examples.md#smoke-test-example) in the DBA database. An empty result set is valid when there are no recommendations.
 
